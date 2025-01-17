@@ -1,4 +1,4 @@
-# Ejercicios de Manejo de Archivos en Linux
+# Ejercicios de Bash en Linux
 
 ## Ejercicio 1
 
