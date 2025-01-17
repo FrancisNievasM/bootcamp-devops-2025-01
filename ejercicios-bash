@@ -1,0 +1,63 @@
+Ejercicio 1
+a) Identificación de Archivos Grandes
+
+cd /var/log
+ls -lhS | grep -v '^d' | head -n 5
+
+ls -lhS: Lista archivos por tamaño (-S) con tamaños legibles (-h).
+grep -v '^d': Muestra solo archivos.
+head -n 5: Muestra los cinco primeros resultados.
+
+b) Archivos Recientemente Modificados
+
+ls -lt | grep -v '^d' | head -n 5
+
+ls -lt: Lista por fecha de modificación (-t) en orden descendente.
+grep -v '^d': Filtra para mostrar solo archivos.
+head -n 5: Muestra los cinco primeros resultados.
+
+c) Monitorización de Archivos Dinámicos
+
+tail -n 20 syslog
+
+Esto muestra las últimas 20 líneas del archivo syslog
+
+tail -f syslog
+
+tail -f: Muestra en tiempo real las líneas que se añaden.
+
+d) Búsqueda de Términos en Archivos
+
+grep -rl "DHCP"
+
+grep -r: Busca recursivamente dentro de los archivos.
+-l: Devuelve solo los nombres de los archivos que contienen el término.
+También se podría usar el parámetro -i: Hace que la búsqueda no sea case-sensitive.
+
+e) Copia de Archivos Grandes
+
+mkdir ~/logs_large
+find /var/log -type f -size +4k -exec cp {} ~/logs_large/ \;
+
+find /var/log -type f: Busca solo archivos.
+-size +4k: Filtra archivos mayores a 4 KB.
+-exec cp {} ~/logs_large/ \;: Copia cada archivo encontrado a la carpeta.
+
+f) Copia de Archivos Basado en Contenido
+
+mkdir ~/logs_system
+grep -rl "system" /var/log | xargs -I {} cp {} ~/logs_system/
+
+grep -rl "system" /var/log: Busca archivos que contienen "system".
+xargs -I {} cp {}: Copia cada archivo encontrado a la carpeta.
+
+g) Copia de Archivos por Fecha de Modificación
+
+mkdir ~/logs_jan8
+find /var/log -type f -newermt "2025-01-08" ! -newermt "2025-01-09" -exec cp {} ~/logs_jan8/ \;
+
+-newermt "2025-01-08": Filtra archivos modificados desde el 8 de enero de 2025.
+! -newermt "2025-01-09": Excluye archivos modificados después del 8 de enero de 2025.
+
+
+
