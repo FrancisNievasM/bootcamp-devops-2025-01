@@ -170,3 +170,65 @@ El archivo `sleep` generalmente se encuentra en `/bin` o `/usr/bin`:
 - **`/usr/bin`**: Contiene comandos y aplicaciones adicionales para usuarios.
 
 Ambas carpetas son cruciales para el funcionamiento de Linux, ya que almacenan herramientas y utilidades esenciales.
+
+---
+
+## Ejercicio 5: Manipulación de Archivos de Texto
+
+### Descargar el Archivo de Configuración de Docker
+Para descargar el archivo de configuración de Docker desde la terminal:
+```bash
+wget https://get.docker.com -O docker-config.sh
+```
+**Explicación:**
+- `wget`: Utilidad para descargar archivos desde internet.
+- `https://get.docker.com`: URL del archivo.
+- `-O docker-config.sh`: Guarda el archivo descargado con el nombre `docker-config.sh`.
+
+---
+
+### a) Reorganización de Líneas
+Mueve el texto de la línea 316 a la línea 519:
+```bash
+sed -n '316,519p' docker-config.sh >> docker-config.sh
+sed -i '316,519d' docker-config.sh
+```
+**Explicación:**
+- `sed -n '316,519p'`: Extrae las líneas 316 a 519.
+- `>> docker-config.sh`: Añade estas líneas al final del archivo.
+- `sed -i '316,519d'`: Elimina las líneas 316 a 519 del archivo original.
+
+---
+
+### b) Contar Cantidad de Palabras
+Cuenta cuántas veces aparece la palabra "echo" en el archivo:
+```bash
+grep -o "\becho\b" docker-config.sh | wc -l
+```
+**Explicación:**
+- `grep -o "\becho\b"`: Encuentra cada ocurrencia exacta de "echo".
+- `wc -l`: Cuenta el número de líneas, que corresponde al número de ocurrencias.
+
+---
+
+### c) Reemplazo de Texto
+Sustituye cada ocurrencia de "echo" con "printf":
+```bash
+sed -i 's/\becho\b/printf/g' docker-config.sh
+```
+**Explicación:**
+- `sed -i`: Edita el archivo en su lugar.
+- `'s/\becho\b/printf/g'`: Sustituye todas las apariciones exactas de "echo" por "printf".
+
+---
+
+### d) Manipulación de Segmentos de Línea
+Mueve las líneas de la 140 a la 146 al final del archivo:
+```bash
+sed -n '140,146p' docker-config.sh >> docker-config.sh
+sed -i '140,146d' docker-config.sh
+```
+**Explicación:**
+- `sed -n '140,146p'`: Extrae las líneas 140 a 146.
+- `>> docker-config.sh`: Añade estas líneas al final del archivo.
+- `sed -i '140,146d'`: Elimina las líneas 140 a 146 del archivo original.
