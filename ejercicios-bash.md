@@ -106,3 +106,37 @@ En esta salida:
 - **Avail**: Espacio disponible.
 - **Use%**: Porcentaje de uso del espacio.
 - **Mounted on**: Punto de montaje de la partición.
+
+---
+
+## Ejercicio 3: Exploración del Espacio de Archivos
+
+### a) Carpeta Más Pesada en Raíz
+Desde la raíz del sistema (`/`), encuentra cuál es la carpeta que ocupa más espacio:
+```bash
+du -sh /* | sort -rh | head -n 1
+```
+**Explicación:**
+- `du -sh /*`: Muestra el tamaño total de cada carpeta en la raíz (`/`) en un formato legible (-h).
+- `sort -rh`: Ordena los resultados por tamaño en orden descendente.
+- `head -n 1`: Muestra solo la carpeta más pesada.
+
+---
+
+### b) Carpeta Más Pesada en un Nivel de Subdirectorios
+Identifica cuál es la carpeta más pesada considerando tres niveles de subdirectorios dentro de `/`:
+```bash
+du -sh /*/*/* 2>/dev/null | sort -rh | head -n 1
+```
+**Explicación:**
+- `du -sh /*/*/*`: Calcula el tamaño de carpetas con tres niveles de subdirectorios desde la raíz (`/`).
+- `2>/dev/null`: Oculta los errores si alguna carpeta no tiene suficientes niveles.
+- `sort -rh`: Ordena los resultados por tamaño en orden descendente.
+- `head -n 1`: Muestra solo la carpeta más pesada.
+
+**Ejemplo:**
+Si el resultado es:
+```
+2G    /home/josesito/clasificado
+```
+Esto indica que la carpeta `/home/josesito/clasificado/` ocupa 2 GB.
