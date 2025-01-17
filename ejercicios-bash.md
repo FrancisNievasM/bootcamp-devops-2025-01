@@ -140,3 +140,33 @@ Si el resultado es:
 2G    /home/josesito/clasificado
 ```
 Esto indica que la carpeta `/home/josesito/clasificado/` ocupa 2 GB.
+
+---
+
+## Ejercicio 4: Búsqueda de Archivos
+
+### a) Encontrar el Archivo "sleep"
+Encuentra el archivo llamado `sleep` en todo el sistema y verifica en qué directorios se encuentra:
+```bash
+find / -name "sleep" 2>/dev/null
+```
+**Explicación:**
+- `find /`: Busca desde la raíz del sistema (`/`).
+- `-name "sleep"`: Busca archivos que coincidan exactamente con el nombre `sleep`.
+- `2>/dev/null`: Oculta los errores de permisos.
+
+### b) ¿Qué Hace el Archivo `sleep`?
+El comando `sleep` pausa la ejecución de un proceso durante un período especificado.
+
+**Ejemplo:**
+```bash
+sleep 5
+```
+Este comando detiene la ejecución durante 5 segundos.
+
+### c) ¿La Carpeta Donde se Encuentra es Especial?
+El archivo `sleep` generalmente se encuentra en `/bin` o `/usr/bin`:
+- **`/bin`**: Contiene comandos esenciales para el sistema operativo que son necesarios para su funcionamiento básico, incluso en modo monousuario.
+- **`/usr/bin`**: Contiene comandos y aplicaciones adicionales para usuarios.
+
+Ambas carpetas son cruciales para el funcionamiento de Linux, ya que almacenan herramientas y utilidades esenciales.
