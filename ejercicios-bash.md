@@ -81,3 +81,28 @@ find /var/log -type f -newermt "2025-01-08" ! -newermt "2025-01-09" -exec cp {} 
 **Explicación:**
 - `-newermt "2025-01-08"`: Filtra archivos modificados desde el 8 de enero de 2025.
 - `! -newermt "2025-01-09"`: Excluye archivos modificados después del 8 de enero de 2025.
+
+---
+
+## Ejercicio 2: Espacio Disponible
+### Consulta del Espacio Libre en Particiones
+```bash
+df -h
+```
+**Explicación:**
+- `df`: Muestra el uso de espacio en disco.
+- `-h`: Presenta la salida en un formato legible para humanos (por ejemplo, usando KB, MB o GB).
+
+**Ejemplo de Salida:**
+```
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        50G   20G   30G  40% /
+tmpfs           1.9G     0  1.9G   0% /dev/shm
+```
+En esta salida:
+- **Filesystem**: El sistema de archivos o partición.
+- **Size**: Tamaño total de la partición.
+- **Used**: Espacio utilizado.
+- **Avail**: Espacio disponible.
+- **Use%**: Porcentaje de uso del espacio.
+- **Mounted on**: Punto de montaje de la partición.
