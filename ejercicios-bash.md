@@ -232,3 +232,108 @@ sed -i '140,146d' docker-config.sh
 - `sed -n '140,146p'`: Extrae las líneas 140 a 146.
 - `>> docker-config.sh`: Añade estas líneas al final del archivo.
 - `sed -i '140,146d'`: Elimina las líneas 140 a 146 del archivo original.
+
+---
+
+## Ejercicio 6: Configuración de DHCP
+
+### Descargar el Archivo de Configuración de DHCP
+Para descargar el archivo de configuración de DHCP:
+```bash
+wget https://drive.google.com/uc?id=163FKn6XKCGHVJQOBqTBr6ep_Lpn6iyLM -O dhcp.conf
+```
+**Explicación:**
+- `wget`: Utilidad para descargar archivos desde internet.
+- `https://drive.google.com/uc?id=163FKn6XKCGHVJQOBqTBr6ep_Lpn6iyLM`: URL directa del archivo.
+- `-O dhcp.conf`: Guarda el archivo descargado con el nombre `dhcp.conf`.
+
+---
+
+### a) Listar IPs y Hostnames
+Enumera todas las IPs y nombres de host que están actualmente en uso:
+```bash
+grep -oP 'host \w+|fixed-address \d+\.\d+\.\d+\.\d+' dhcp.conf | paste - -
+```
+**Explicación:**
+- `grep -oP 'host \w+|fixed-address \d+\.\d+\.\d+\.\d+'`: Busca nombres de host e IPs.
+- `paste - -`: Combina líneas consecutivas para mostrar nombre de host e IP juntos.
+
+---
+
+### b) Detectar IPs Disponibles
+Lista las IPs disponibles dentro del rango `192.168.88.1` a `192.168.88.254`:
+```bash
+comm -23 <(seq 192.168.88.1 192.168.88.254 | sort) <(grep -oP 'fixed-address \K\d+\.\d+\.\d+\.\d+' dhcp.conf | sort)
+```
+**Explicación:**
+- `seq 192.168.88.1 192.168.88.254`: Genera todas las IPs del rango.
+- `grep -oP 'fixed-address \K\d+\.\d+\.\d+\.\d+'`: Extrae las IPs usadas en el archivo.
+- `comm -23`: Muestra las IPs del primer conjunto que no están en el segundo.
+
+---
+
+### c) Buscar Entradas
+Encuentra entradas basadas en IP, MAC o nombre de host:
+```bash
+read -p "Ingrese IP, MAC o nombre de host: " criterio
+grep -i "$criterio" dhcp.conf -A 1
+```
+**Explicación:**
+- `read -p`: Solicita al usuario que ingrese un criterio de búsqueda.
+- `grep -i "$criterio" -A 1`: Busca el criterio y muestra la entrada correspondiente junto con la línea siguiente.
+
+---
+
+### d) Añadir Nuevas Entradas
+Añade una nueva entrada verificando duplicados:
+```bash
+read -p "Área: " area
+read -p "Hostname: " hostname
+read -p "MAC: " mac
+read -p "IP: " ip
+grep -q "$ip" dhcp.conf || grep -q "$mac" dhcp.conf || {
+  echo "host $hostname {hardware ethernet $mac; fixed-address $ip;}" >> dhcp.conf
+}
+```
+**Explicación:**
+- `grep -q`: Verifica si ya existe la IP o MAC.
+- `echo`: Añade una nueva entrada si no hay duplicados.
+
+---
+
+### e) Eliminar Entradas
+Elimina una entrada específica:
+```bash
+read -p "Ingrese el hostname o IP de la entrada a eliminar: " criterio
+sed -i "/$criterio/,/}/d" dhcp.conf
+```
+**Explicación:**
+- `sed -i "/$criterio/,/}/d"`: Elimina líneas desde el criterio hasta el cierre de la entrada (`}`).
+
+---
+
+### f) Modificar Entradas
+Cambia detalles de una entrada:
+```bash
+read -p "Hostname/IP a modificar: " criterio
+read -p "Nuevo hostname: " new_host
+read -p "Nueva MAC: " new_mac
+read -p "Nueva IP: " new_ip
+sed -i "/$criterio/ s/host \w\+/host $new_host/" dhcp.conf
+sed -i "/$criterio/ s/hardware ethernet [^;\n]\+/hardware ethernet $new_mac/" dhcp.conf
+sed -i "/$criterio/ s/fixed-address [^;\n]\+/fixed-address $new_ip/" dhcp.conf
+```
+**Explicación:**
+- `sed`: Modifica hostname, MAC e IP en la entrada especificada.
+
+---
+
+### g) Cambiar Área de una Entrada
+Modifica el área de una entrada específica:
+```bash
+read -p "Hostname a modificar: " criterio
+read -p "Nueva área: " new_area
+sed -i "/$criterio/ s/#\w\+/#$new_area/" dhcp.conf
+```
+**Explicación:**
+- `sed`: Cambia el comentario que indica el área de la entrada.
