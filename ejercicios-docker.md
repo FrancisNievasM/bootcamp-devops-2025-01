@@ -192,3 +192,48 @@ docker-compose down
 #### 5. Diferencia entre `docker-compose down` y `docker-compose stop`
 - **`docker-compose stop`:** Detiene los contenedores, pero los mantiene disponibles.
 - **`docker-compose down`:** Detiene y elimina los contenedores, redes y volúmenes creados.
+
+- ---
+
+## Ejercicio 7: Inspección y Depuración de Contenedores
+### Objetivo: Utilizar herramientas para inspeccionar y depurar contenedores.
+
+#### 1. Inspeccionar los detalles de configuración de un contenedor
+```bash
+docker inspect <container_id>
+```
+#### 2. Obtener los logs de un contenedor en ejecución
+```bash
+docker logs <container_id>
+```
+#### 3. Abrir una terminal en modo interactivo a un contenedor activo
+```bash
+docker exec -it <container_id> /bin/bash
+```
+#### 4. Verificar los recursos (CPU/memoria) utilizados por un contenedor
+```bash
+docker stats <container_id>
+```
+---
+
+## Ejercicio 8: Seguridad en Docker
+### Objetivo: Implementar configuraciones básicas de seguridad en Docker.
+
+#### 1. Crear un contenedor que utilice un usuario no root
+```bash
+docker run -u 1000:1000 nginx
+```
+- **Explicación:** `-u 1000:1000` indica el UID y GID del usuario no root.
+
+#### 2. Limitar el uso de CPU y memoria de un contenedor
+```bash
+docker run --memory="512m" --cpus="1.0" nginx
+```
+- **`--memory="512m"`:** Limita la memoria a 512 MB.
+- **`--cpus="1.0"`:** Asigna un máximo de un núcleo de CPU.
+
+#### 3. Prácticas recomendadas para mejorar la seguridad en Docker
+- **Usar imágenes oficiales y verificadas:** Reduce el riesgo de vulnerabilidades.
+- **Mantener las imágenes y contenedores actualizados:** Aplica parches de seguridad regularmente.
+- **Evitar ejecutar contenedores con privilegios elevados:** Minimiza riesgos de acceso no autorizado.
+
